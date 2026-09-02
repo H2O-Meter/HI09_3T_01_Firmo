@@ -20,12 +20,13 @@ export const Header: React.FC<HeaderProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: ShieldAlert, badge: '4 Marcos' },
-    { id: 'timeline', label: 'Linha do Tempo', icon: Clock, badge: '1945–1991' },
+    { id: 'cronologia-completa', label: '1945–1991 (5 Fases)', icon: Clock, badge: 'Ordem Cronológica' },
+    { id: 'dashboard', label: 'Dashboard (4 Marcos)', icon: ShieldAlert, badge: '1945/62/89/91' },
+    { id: 'timeline', label: 'Linha do Tempo (7)', icon: Clock, badge: '1945–1991' },
     { id: 'analogias', label: '3 Analogias', icon: Sparkles, badge: 'Obrigatórias' },
     { id: 'blocos', label: 'EUA x URSS', icon: Layers, badge: 'Ideologias' },
     { id: 'conflitos', label: 'Conflitos & Espaço', icon: BookOpen, badge: 'Proxy' },
-    { id: 'quiz', label: 'Quiz 9º Ano', icon: Award, badge: 'Fixação' },
+    { id: 'quiz', label: 'Simulado 9º Ano', icon: Award, badge: 'Fixação' },
   ];
 
   const handleNavClick = (id: string) => {

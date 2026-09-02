@@ -360,7 +360,16 @@ export const PROXY_CONFLICTS: ConflictCase[] = [
   },
 ];
 
-export const SPACE_RACE_STEPS = [
+export interface SpaceRaceMilestone {
+  year: number;
+  title: string;
+  achievement: string;
+  winner: 'urss' | 'eua' | 'coop';
+  winnerName: string;
+  significance: string;
+}
+
+export const SPACE_RACE_STEPS: SpaceRaceMilestone[] = [
   {
     year: 1957,
     title: 'Sputnik 1 (URSS)',

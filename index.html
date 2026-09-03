@@ -4,14 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Escola Parque Ipiranga - Guerra Fria | 9º Ano - Prof. Anderson Firmo</title>
-    <meta name="description" content="Capítulo A5: A Guerra Fria - O mundo dividido: armas, ideologias e o equilíbrio do terror. Conteúdo educacional interativo da Escola Parque Ipiranga ministrado pelo Prof. Anderson Firmo." />
+    <meta name="description" content="Guia de Estudos e Plataforma Interativa de História do 9º Ano: Da Guerra Fria (A5) à Nova República no Século XXI (B8). Prof. Anderson Firmo." />
     <meta property="og:title" content="Escola Parque Ipiranga - Guerra Fria | Prof. Anderson Firmo" />
-    <meta property="og:description" content="Capítulo A5: A Guerra Fria - O mundo dividido: armas, ideologias e o equilíbrio do terror. 9º Ano do Ensino Fundamental." />
+    <meta property="og:description" content="Guia de Estudos e Plataforma Interativa de História do 9º Ano: Da Guerra Fria (A5) à Nova República no Século XXI (B8). Prof. Anderson Firmo." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel:wght@600;700;900&family=Outfit:wght@400;500;600;700;800&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch ? window.fetch.bind(window) : undefined;
+          var currentFetch = originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return currentFetch;
+            },
+            set: function(val) {
+              currentFetch = val;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          try {
+            if (typeof Window !== 'undefined' && Window.prototype) {
+              var protoFetch = Window.prototype.fetch;
+              Object.defineProperty(Window.prototype, 'fetch', {
+                get: function() { return protoFetch; },
+                set: function(val) { protoFetch = val; },
+                configurable: true,
+                enumerable: true
+              });
+            }
+          } catch (_) {}
+        }
+      })();
+    </script>
   </head>
   <body class="bg-[#FBFBFB] text-[#1A202C] antialiased selection:bg-[#FD7600] selection:text-white">
     <div id="root"></div>

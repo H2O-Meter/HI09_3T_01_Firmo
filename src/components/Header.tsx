@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { BrandLogo } from './BrandLogo';
-import { BookOpen, Award, Layers, Clock, ShieldAlert, Sparkles, Menu, X, Printer, UserCheck } from 'lucide-react';
+import { BookOpen, Award, Layers, Clock, ShieldAlert, Sparkles, Menu, X, Printer, UserCheck, PenTool, GitFork, Compass, Theater, Search } from 'lucide-react';
+import { ChapterCode } from '../types';
 
 interface HeaderProps {
   onOpenStudyGuide: () => void;
+  onOpenSearch: () => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
   isPresentationMode: boolean;
@@ -12,6 +14,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenStudyGuide,
+  onOpenSearch,
   activeSection,
   setActiveSection,
   isPresentationMode,
@@ -20,13 +23,13 @@ export const Header: React.FC<HeaderProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'cronologia-completa', label: '1945–1991 (5 Fases)', icon: Clock, badge: 'Ordem Cronológica' },
-    { id: 'dashboard', label: 'Dashboard (4 Marcos)', icon: ShieldAlert, badge: '1945/62/89/91' },
-    { id: 'timeline', label: 'Linha do Tempo (7)', icon: Clock, badge: '1945–1991' },
-    { id: 'analogias', label: '3 Analogias', icon: Sparkles, badge: 'Obrigatórias' },
-    { id: 'blocos', label: 'EUA x URSS', icon: Layers, badge: 'Ideologias' },
-    { id: 'conflitos', label: 'Conflitos & Espaço', icon: BookOpen, badge: 'Proxy' },
-    { id: 'quiz', label: 'Simulado 9º Ano', icon: Award, badge: 'Fixação' },
+    { id: 'historical-theater-model', label: 'Teatro Histórico', icon: Theater, badge: 'Cênico & Decisão' },
+    { id: 'curriculum-navigator', label: '8 Módulos (A5–B8)', icon: Compass, badge: 'Ementa Completa' },
+    { id: 'study-modes-section', label: 'Modos de Estudo', icon: PenTool, badge: '6 Formatos' },
+    { id: 'chapter-detail-view', label: 'Subtópicos Oficiais', icon: BookOpen, badge: 'Detalhamento' },
+    { id: 'analogias-master', label: 'Analogias', icon: Sparkles, badge: 'Fixação' },
+    { id: 'timeline', label: 'Linha do Tempo', icon: Clock, badge: '1945–2026' },
+    { id: 'quiz', label: 'Simulado BNCC', icon: Award, badge: 'Sem Resposta' },
   ];
 
   const handleNavClick = (id: string) => {
@@ -48,9 +51,9 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium">
             <span className="inline-block w-2 h-2 rounded-full bg-[#FD7600] animate-pulse"></span>
-            <span>Ensino Fundamental II • 9º Ano • Capítulo A5</span>
+            <span>Ensino Fundamental II • 9º Ano • Ementa Completa (A5 a B8)</span>
             <span className="hidden sm:inline text-white/60">|</span>
-            <span className="hidden sm:inline font-bold text-[#C9A84C]">História Contemporânea</span>
+            <span className="hidden sm:inline font-bold text-[#C9A84C]">História Contemporânea & Brasil República</span>
           </div>
 
           <div className="flex items-center gap-2 font-bold tracking-wide">
@@ -97,6 +100,20 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2">
+          {/* Quick Search Trigger (Cmd+K) */}
+          <button
+            id="btn-search-trigger"
+            onClick={onOpenSearch}
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100/90 text-slate-700 hover:bg-slate-200/90 hover:text-slate-900 border border-slate-200 transition-all cursor-pointer shadow-xs"
+            title="Buscar tópicos, módulos ou conceitos (Ctrl+K / Cmd+K)"
+          >
+            <Search className="w-3.5 h-3.5 text-slate-500" />
+            <span className="hidden sm:inline">Buscar</span>
+            <kbd className="hidden md:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-slate-500 bg-white rounded border border-slate-200">
+              ⌘K
+            </kbd>
+          </button>
+
           <button
             id="btn-presentation-mode"
             onClick={() => setIsPresentationMode(!isPresentationMode)}
@@ -113,11 +130,12 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="btn-study-guide"
             onClick={onOpenStudyGuide}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#FD7600] text-white hover:bg-[#e06900] shadow-xs hover:shadow-md transition-all cursor-pointer border border-[#C9A84C]/40"
+            className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#FD7600] text-white hover:bg-[#e06900] shadow-xs hover:shadow-md transition-all cursor-pointer border border-[#C9A84C]/40"
+            title="Abrir e Baixar Guia de Estudos em PDF"
           >
             <Printer className="w-3.5 h-3.5 text-white" />
-            <span className="hidden sm:inline">Guia de Estudos</span>
-            <span className="sm:hidden">Guia</span>
+            <span className="hidden sm:inline">Guia em PDF (A5 a B8)</span>
+            <span className="sm:hidden">PDF</span>
           </button>
 
           {/* Mobile Menu Toggle */}
@@ -134,7 +152,22 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 shadow-lg animate-in slide-in-from-top-2">
+        <div className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-4 shadow-lg animate-in slide-in-from-top-2">
+          {/* Mobile Search Button */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenSearch();
+            }}
+            className="w-full mb-3 flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 cursor-pointer"
+          >
+            <span className="flex items-center gap-2">
+              <Search className="w-4 h-4 text-[#FD7600]" />
+              <span>Pesquisar módulo, tópico ou conceito...</span>
+            </span>
+            <span className="text-[10px] text-slate-400 font-mono">Buscar</span>
+          </button>
+
           <div className="grid grid-cols-2 gap-2 mb-3">
             {navItems.map((item) => {
               const Icon = item.icon;

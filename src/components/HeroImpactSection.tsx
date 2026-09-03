@@ -26,8 +26,8 @@ interface HeroImpactSectionProps {
 }
 
 export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreClick }) => {
-  // Scenario Focus Mode (A: Standoff 1961, B: Death Strip Anatomy, C: Fall 1989)
-  const [activeScenario, setActiveScenario] = useState<'standoff' | 'wall' | 'fall'>('standoff');
+  // Scenario Focus Mode (A: Standoff 1961, B: Death Strip Anatomy, C: Cuba 1962, D: Fall 1989)
+  const [activeScenario, setActiveScenario] = useState<'standoff' | 'wall' | 'cuba' | 'fall'>('standoff');
   const [selectedHotspot, setSelectedHotspot] = useState<number>(1);
 
   // Hotspots definitions for clarity
@@ -37,6 +37,8 @@ export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreC
       subtitle: 'Friedrichstraße, Berlim • O momento em que a 3ª Guerra Mundial esteve a 100 metros de começar.',
       tag: 'Tensão Máxima • DEFCON 2',
       tagColor: 'bg-red-600 text-white',
+      sectorLeft: 'Setor Ocidental (EUA/OTAN)',
+      sectorRight: 'Setor Oriental (URSS/Pacto)',
       hotspots: [
         {
           id: 1,
@@ -81,6 +83,8 @@ export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreC
       subtitle: 'Mais de 155 km de extensão isolando a ilha capitalista de Berlim Ocidental.',
       tag: 'Estrutura de Concreto',
       tagColor: 'bg-[#FD7600] text-white',
+      sectorLeft: 'Berlim Ocidental (Capitalista)',
+      sectorRight: 'Berlim Oriental (Socialista)',
       hotspots: [
         {
           id: 1,
@@ -111,11 +115,59 @@ export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreC
         },
       ],
     },
+    cuba: {
+      title: 'A Crise dos Mísseis de Cuba: Quarentena Naval e DEFCON 2 (Outubro de 1962)',
+      subtitle: 'Mar do Caribe • Os 13 dias em que o planeta esteve à beira do holocausto nuclear.',
+      tag: 'Tensão Crítica • DEFCON 2',
+      tagColor: 'bg-red-700 text-white',
+      sectorLeft: 'Quarentena Naval dos EUA',
+      sectorRight: 'Silos de Mísseis / Cuba e URSS',
+      hotspots: [
+        {
+          id: 1,
+          title: 'Linha de Quarentena da Marinha dos EUA',
+          coord: 'left-[22%] top-[45%]',
+          badge: 'Bloqueio Naval',
+          badgeColor: 'bg-blue-600 text-white',
+          desc: '180 navios de guerra norte-americanos posicionados para interceptar cargueiros soviéticos a caminho de Cuba. Kennedy usou o termo "quarentena" para evitar caracterizar declaração de guerra direta.',
+          examTip: 'A distinção jurídica e tática entre "quarentena" e "bloqueio bélico" é tema recorrente de vestibulares e simulados do 9º ano.',
+        },
+        {
+          id: 2,
+          title: 'Silos de Mísseis R-12 em San Cristóbal',
+          coord: 'left-[78%] top-[55%]',
+          badge: 'Ogivas Nucleares',
+          badgeColor: 'bg-red-700 text-white',
+          desc: 'Mísseis soviéticos capazes de atingir Washington e 80% do território dos EUA em menos de 15 minutos, flagrados em fotografias aéreas pelos aviões espiões U-2.',
+          examTip: 'Kruschev enviou as ogivas para dissuadir nova invasão da ilha pós-Baía dos Porcos e rebater os mísseis Júpiter dos EUA na Turquia.',
+        },
+        {
+          id: 3,
+          title: 'Submarino Soviético B-59 (Vassili Arkhipov)',
+          coord: 'left-[42%] top-[75%]',
+          badge: 'Herói Silencioso',
+          badgeColor: 'bg-amber-600 text-white',
+          desc: 'Bombardeado com cargas de sinalização e incomunicável, o comando do submarino votou pelo disparo de um torpedo atômico de 10 quilotons. O oficial Vassili Arkhipov foi o único dos 3 comandantes a vetar o lançamento.',
+          examTip: 'O voto solitário de Arkhipov evitou o início imediato de um holocausto termonuclear global em 27 de outubro de 1962.',
+        },
+        {
+          id: 4,
+          title: 'O Acordo Secreto e a Linha Vermelha',
+          coord: 'left-[60%] top-[25%]',
+          badge: 'Canal Diplomático',
+          badgeColor: 'bg-[#016E01] text-white',
+          desc: 'Pacto confidencial: a URSS desmantelou e retirou as armas ofensivas de Cuba em troca da promessa dos EUA de não invadir a ilha e de retirar secretamente os mísseis da Turquia e Itália.',
+          examTip: 'A crise gerou o "Telefone Vermelho" (linha de teletipo direto Washington-Moscou) e acelerou o Tratado de Não-Proliferação Nuclear.',
+        },
+      ],
+    },
     fall: {
       title: 'A Queda do Muro e a Ruptura da Cortina de Ferro (09/11/1989)',
       subtitle: 'O colapso da barreira física que simbolizou o esgotamento do modelo soviético.',
       tag: 'Marco Histórico',
       tagColor: 'bg-[#016E01] text-white',
+      sectorLeft: 'Berlim Ocidental (Povo Livre)',
+      sectorRight: 'Berlim Oriental (Bornholmer)',
       hotspots: [
         {
           id: 1,
@@ -322,19 +374,19 @@ export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreC
               </div>
 
               {/* Scenario Interactive Switcher Tabs */}
-              <div className="grid grid-cols-3 bg-black/40 p-1.5 border-b border-gray-700 gap-1 text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 bg-black/40 p-1.5 border-b border-gray-700 gap-1 text-xs">
                 <button
                   onClick={() => {
                     setActiveScenario('standoff');
                     setSelectedHotspot(1);
                   }}
-                  className={`py-2 px-2 rounded-lg font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`py-2 px-1.5 rounded-lg font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1 cursor-pointer ${
                     activeScenario === 'standoff'
                       ? 'bg-[#FD7600] text-white shadow-xs'
                       : 'text-gray-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <span>1961: Impasse</span>
+                  <span className="truncate">1961: Impasse</span>
                   <span className="text-xs">⚔️</span>
                 </button>
 
@@ -343,14 +395,29 @@ export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreC
                     setActiveScenario('wall');
                     setSelectedHotspot(1);
                   }}
-                  className={`py-2 px-2 rounded-lg font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`py-2 px-1.5 rounded-lg font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1 cursor-pointer ${
                     activeScenario === 'wall'
                       ? 'bg-[#FD7600] text-white shadow-xs'
                       : 'text-gray-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <span>Anatomia do Muro</span>
+                  <span className="truncate">Muro Berlim</span>
                   <span className="text-xs">🧱</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setActiveScenario('cuba');
+                    setSelectedHotspot(1);
+                  }}
+                  className={`py-2 px-1.5 rounded-lg font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1 cursor-pointer ${
+                    activeScenario === 'cuba'
+                      ? 'bg-[#FD7600] text-white shadow-xs'
+                      : 'text-gray-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <span className="truncate">1962: Cuba</span>
+                  <span className="text-xs">🚀</span>
                 </button>
 
                 <button
@@ -358,13 +425,13 @@ export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreC
                     setActiveScenario('fall');
                     setSelectedHotspot(1);
                   }}
-                  className={`py-2 px-2 rounded-lg font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`py-2 px-1.5 rounded-lg font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1 cursor-pointer ${
                     activeScenario === 'fall'
                       ? 'bg-[#FD7600] text-white shadow-xs'
                       : 'text-gray-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <span>1989: A Queda</span>
+                  <span className="truncate">1989: Queda</span>
                   <span className="text-xs">🕊️</span>
                 </button>
               </div>
@@ -374,16 +441,16 @@ export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreC
                 {/* Tactical Grid Background */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
 
-                {/* Left Sector Indicator (US / Western) */}
-                <div className="absolute left-3 top-3 bg-blue-950/80 border border-blue-500/40 text-blue-200 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 backdrop-blur-sm z-10">
-                  <span className="w-2 h-2 rounded-full bg-blue-400"></span>
-                  <span>Setor Ocidental (EUA/OTAN)</span>
+                {/* Left Sector Indicator */}
+                <div className="absolute left-3 top-3 bg-blue-950/80 border border-blue-500/40 text-blue-200 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 backdrop-blur-sm z-10 max-w-[45%] truncate">
+                  <span className="w-2 h-2 rounded-full bg-blue-400 shrink-0"></span>
+                  <span className="truncate">{currentScenario.sectorLeft || 'Setor Ocidental (EUA/OTAN)'}</span>
                 </div>
 
-                {/* Right Sector Indicator (USSR / Eastern) */}
-                <div className="absolute right-3 top-3 bg-red-950/80 border border-red-500/40 text-red-200 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 backdrop-blur-sm z-10">
-                  <span className="w-2 h-2 rounded-full bg-red-400"></span>
-                  <span>Setor Oriental (URSS/Pacto)</span>
+                {/* Right Sector Indicator */}
+                <div className="absolute right-3 top-3 bg-red-950/80 border border-red-500/40 text-red-200 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 backdrop-blur-sm z-10 max-w-[45%] truncate">
+                  <span className="w-2 h-2 rounded-full bg-red-400 shrink-0"></span>
+                  <span className="truncate">{currentScenario.sectorRight || 'Setor Oriental (URSS/Pacto)'}</span>
                 </div>
 
                 {/* Central Dividing Border Line (Checkpoint Charlie / Wall Line) */}
@@ -464,6 +531,17 @@ export const HeroImpactSection: React.FC<HeroImpactSectionProps> = ({ onExploreC
                     </strong>
                     {activeSpot.examTip}
                   </div>
+                </div>
+
+                {/* Button to Jump to the New Dramatized Theater Model */}
+                <div className="mt-3 pt-3 border-t border-gray-800">
+                  <a
+                    href="#historical-theater-model"
+                    className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#FD7600] to-[#e06800] hover:from-[#e06800] hover:to-[#FD7600] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01] cursor-pointer"
+                  >
+                    <span>🎭 Conhecer Novo Modelo: Teatro Dramatizado & Gabinete de Decisão</span>
+                    <span className="text-xs">→</span>
+                  </a>
                 </div>
               </div>
             </div>

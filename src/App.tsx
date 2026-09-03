@@ -1,31 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroImpactSection } from './components/HeroImpactSection';
+import { HistoricalDramaTheater } from './components/HistoricalDramaTheater';
+import { CurriculumNavigator } from './components/CurriculumNavigator';
+import { StudyModesTabs } from './components/StudyModesTabs';
+import { ChapterDetailView } from './components/ChapterDetailView';
+import { AnalogiesMasterSection } from './components/AnalogiesMasterSection';
 import { ChronologicalMasterView } from './components/ChronologicalMasterView';
 import { DashboardMilestones } from './components/DashboardMilestones';
 import { TimelineInteractive } from './components/TimelineInteractive';
-import { AnalogiesSection } from './components/AnalogiesSection';
 import { BlocsComparison } from './components/BlocsComparison';
 import { ConflictsAndSpace } from './components/ConflictsAndSpace';
 import { QuizSection } from './components/QuizSection';
 import { StudyGuideModal } from './components/StudyGuideModal';
+import { CommandPalette } from './components/CommandPalette';
+import { StudyMasteryTracker } from './components/StudyMasteryTracker';
 import { Footer } from './components/Footer';
+import { ChapterCode, StudyMode } from './types';
+import { allChapters, getChapterByCode } from './data/curriculumData';
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState('cronologia-completa');
+  const [activeSection, setActiveSection] = useState('curriculum-navigator');
   const [isStudyGuideOpen, setIsStudyGuideOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
+
+  // Curriculum State (8 Official Modules: A5, A6, B5, B6, A7, A8, B7, B8)
+  const [selectedChapterCode, setSelectedChapterCode] = useState<ChapterCode>('A5');
+  const [activeStudyMode, setActiveStudyMode] = useState<StudyMode>('handwritten');
+
+  const selectedChapter = getChapterByCode(selectedChapterCode);
 
   // Scroll Spy for section highlighting
   useEffect(() => {
     const handleScroll = () => {
       const sections = [
-        'cronologia-completa',
-        'dashboard',
+        'curriculum-navigator',
+        'study-modes-section',
+        'chapter-detail-view',
+        'analogias-master',
         'timeline',
-        'analogias',
-        'blocos',
-        'conflitos',
         'quiz',
       ];
       const scrollPos = window.scrollY + 200;
@@ -48,9 +62,17 @@ export default function App() {
   }, []);
 
   const handleExploreClick = () => {
-    const cronologia = document.getElementById('cronologia-completa');
-    if (cronologia) {
-      cronologia.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const nav = document.getElementById('curriculum-navigator');
+    if (nav) {
+      nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleSelectChapter = (code: ChapterCode) => {
+    setSelectedChapterCode(code);
+    const detailView = document.getElementById('study-modes-section');
+    if (detailView) {
+      detailView.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -63,6 +85,7 @@ export default function App() {
       {/* Main Header with Branding & Prof. Anderson Firmo */}
       <Header
         onOpenStudyGuide={() => setIsStudyGuideOpen(true)}
+        onOpenSearch={() => setIsCommandPaletteOpen(true)}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         isPresentationMode={isPresentationMode}
@@ -71,38 +94,75 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main className="flex-grow">
-        {/* Cover / Hero / High-Impact 16:9 Visual */}
+        {/* Cover / Hero / Checkpoint Charlie Visual & Tactical Theater */}
         <HeroImpactSection onExploreClick={handleExploreClick} />
 
-        {/* Chronological Master View: 5 Sequential Eras (1945 -> 1991) */}
+        {/* NEW THEATER MODEL: TEATRO DE DRAMATIZAÇÃO HISTÓRICA & SALA DE DECISÕES */}
+        <HistoricalDramaTheater />
+
+        {/* 1. CURRICULUM NAVIGATOR (8 Official Modules: A5, A6, B5, B6, A7, A8, B7, B8) */}
+        <CurriculumNavigator
+          activeChapter={selectedChapterCode}
+          onSelectChapter={handleSelectChapter}
+        />
+
+        {/* 2. STUDY MODES TABS [/handwritten , /stick notes , /mindmap , /comic, /inforgraphic] */}
+        <StudyModesTabs
+          chapter={selectedChapter}
+          activeMode={activeStudyMode}
+          onSelectMode={setActiveStudyMode}
+        />
+
+        {/* 3. CHAPTER SUBTOPICS DETAIL (Strict Annex Order) */}
+        <ChapterDetailView chapter={selectedChapter} />
+
+        {/* 4. MASTER ANALOGIES SECTION (Pedagogical Metaphors across the 8 Modules) */}
+        <AnalogiesMasterSection />
+
+        {/* 5. HISTORICAL PROGRESSION & MILESTONES (1945 -> 1991 -> 2026) */}
         <ChronologicalMasterView />
-
-        {/* Dashboard 4 Milestones: 1945, 1962, 1989, 1991 */}
-        <DashboardMilestones />
-
-        {/* 7 Timeline Milestones: 1945, 1949, 1959, 1962, 1975, 1989, 1991 */}
         <TimelineInteractive />
-
-        {/* 3 Mandatory Analogies */}
-        <AnalogiesSection />
-
-        {/* Capitalist vs Socialist Blocs */}
         <BlocsComparison />
-
-        {/* Proxy Conflicts & Space Race */}
         <ConflictsAndSpace />
 
-        {/* 9th Grade Interactive Quiz */}
+        {/* 6. SIMULADO 9º ANO BNCC (Sem Respostas Pre-Marcadas / Gabarito no Final) */}
         <QuizSection />
       </main>
 
-      {/* Main Footer with Escola Parque Ipiranga and Prof. Anderson Firmo */}
+      {/* Main Footer */}
       <Footer />
 
-      {/* Printable Study Guide Modal */}
+      {/* Comprehensive Printable / Downloadable Study Guide Modal */}
       <StudyGuideModal
         isOpen={isStudyGuideOpen}
         onClose={() => setIsStudyGuideOpen(false)}
+      />
+
+      {/* Modern Command Palette (Cmd+K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onSelectChapter={handleSelectChapter}
+        onSelectStudyMode={(mode) => {
+          setActiveStudyMode(mode);
+          const detailView = document.getElementById('study-modes-section');
+          detailView?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onOpenStudyGuide={() => setIsStudyGuideOpen(true)}
+      />
+
+      {/* Student Learning Mastery Tracker & HUD */}
+      <StudyMasteryTracker
+        currentChapterCode={selectedChapterCode}
+        onNavigateToChapter={handleSelectChapter}
+        onNavigateToQuiz={() => {
+          const quizEl = document.getElementById('quiz');
+          quizEl?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onNavigateToTheater={() => {
+          const theaterEl = document.getElementById('historical-theater-model');
+          theaterEl?.scrollIntoView({ behavior: 'smooth' });
+        }}
       />
     </div>
   );
